@@ -1,0 +1,15 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Distribution / packaging
+.Python
+env/
+build/
+dist/
+downloads/
+docs/
+lib/
+lib64/
+parts/
+var/
