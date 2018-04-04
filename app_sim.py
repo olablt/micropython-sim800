@@ -13,19 +13,18 @@ async def app_loop():
 	await sim.command("AT+CBC", "+CBC") # battery status
 	
 	apn = "internet.tele2.lt"
-	url = 'https://olab.lt/uploads/default/original/1X/46079f8ccd8f921d582004add927932ea380a738.txt'
+	url = 'http://exploreembedded.com/wiki/images/1/15/Hello.txt'
 	
 	await sim.command('AT+CREG?') # Check the Network Registration
 	await sim.command('AT+SAPBR=3,1,"Contype","GPRS"', 'OK') # connection type
 	await sim.command('AT+SAPBR=3,1,"APN","{}"'.format(apn), 'OK') # GPRS APN
 	await sim.command('AT+SAPBR=2,1') # Get current bearer
-	# If bearer == 0,0,0,0 (not assigned) get a new bearer
-	#  +SAPBR: 1,3,"0.0.0.0"
 	
 	await sim.command('AT+SAPBR=1,1', 'OK') # Open GPRS connection on profile 1
 	await sim.command('AT+HTTPINIT', 'OK') # Init HTTP service
 	await sim.command('AT+HTTPPARA="CID",1', 'OK') # Choose profile 1 as HTTP channel
 	await sim.command('AT+HTTPPARA="URL","{}"'.format(url), 'OK')
+	# await sim.command('AT+HTTPSSL=1') # Enable HTTPS function
 	# await sim.command('AT+HTTPPARA="REDIR",1', 'OK')
 	await sim.command('AT+HTTPACTION=0', '+HTTPACTION') # start GET session (may be long)
 	await sim.command('AT+HTTPREAD') # Read the data of HTTP server
